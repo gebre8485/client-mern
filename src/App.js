@@ -7,6 +7,7 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import {Provider} from 'react-redux';
 import store from './store'; 
+import Alert from "./components/layout/Alert"
 function App() {
   return (
     <Provider store={store}>
@@ -15,6 +16,7 @@ function App() {
       <Navbar/>
       <Route exact path="/" component={Landing}/>
       <section className="container">
+        <Alert/>
         <Switch>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/signup" component={Signup}/>

@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-const Signup = () => {
+import {connect} from 'react-redux';
+import {setAlert} from '../../actions/alert';
+import propTypes from 'prop-types';
+const Signup = (props) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -14,18 +17,23 @@ const Signup = () => {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
-        const newUser = {
-            name, email, password, password2
-        };
-        const config = {
-            headers: {
-                "Content-Type": "application/json"
-            }
+        if (formData.password !== formData.password2){
+          props.setAlert("passwords don't match", "danger");
+        }else{
+          console.log("success")
         }
+        // const newUser = {
+        //     name, email, password, password2
+        // };
+        // const config = {
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        // }
 
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('/user/registeration', body, config);
-        console.log(res.data);
+        // const body = JSON.stringify(newUser);
+        // const res = await axios.post('/user/registeration', body, config);
+        // console.log(res.data);
     }
     return ( 
         <Fragment>
@@ -81,9 +89,12 @@ const Signup = () => {
         </form>
         <p className="my-1">
           Already have an account? <Link to="/login">Sign In</Link>
+          {console.log("the props are ", props.setAlert)}
         </p>
       </Fragment>
      );
 }
- 
-export default Signup;
+ Signup.propTypes = {
+   setAlert: propTypes.func.isRequired,
+ }
+export default connect(null, {setAlert})(Signup);
